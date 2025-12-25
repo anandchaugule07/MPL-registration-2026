@@ -12,12 +12,14 @@
     <h2>🏏 Tournament Registration</h2>
     <p class="subtitle">Fill details & complete payment to register</p>
 
-    <form>
+    <!-- ===== FORM START ===== -->
+    <form id="regForm">
+
       <label>Player Name</label>
-      <input type="text" placeholder="Enter full name" required>
+      <input type="text" name="playerName" placeholder="Enter full name" required>
 
       <label>Role</label>
-      <select required>
+      <select name="role" required>
         <option value="">Select Role</option>
         <option>Batsman</option>
         <option>Bowler</option>
@@ -26,28 +28,73 @@
       </select>
 
       <label>Mobile Number</label>
-      <input type="tel" placeholder="10-digit mobile number" required>
+      <input type="tel" name="mobile" placeholder="10-digit mobile number" required>
 
       <div class="payment-box">
         <h3>💳 Pay Registration Fee (₹1)</h3>
-       <img src="anand.jpg" alt="UPI QR Code">
+        <img src="anand.jpg" alt="UPI QR Code">
         <p>Scan using Google Pay / PhonePe / Paytm</p>
       </div>
 
       <label>UPI Transaction ID</label>
-      <input type="text" placeholder="Enter UPI Ref / Transaction ID" required>
+      <input type="text" name="txnId" placeholder="Enter UPI Ref / Transaction ID" required>
 
       <label>Upload Payment Screenshot</label>
-      <input type="file" accept="image/*" required>
+      <input type="file" id="screenshot" accept="image/*" required>
 
       <button type="submit">Submit Registration</button>
+
     </form>
+    <!-- ===== FORM END ===== -->
 
     <p class="note">
       ✔ Registration will be confirmed on WhatsApp after payment verification
     </p>
   </div>
 </div>
+
+<!-- ===== GOOGLE SHEET SCRIPT ===== -->
+<script>
+const form = document.getElementById("regForm");
+
+form.addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  const fileInput = document.getElementById("screenshot");
+  const file = fileInput.files[0];
+
+  if (!file) {
+    alert("Please upload payment screenshot");
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = function () {
+
+    const data = {
+      playerName: form.playerName.value,
+      role: form.role.value,
+      mobile: form.mobile.value,
+      txnId: form.txnId.value,
+      screenshot: reader.result
+    };
+
+    fetch("https://script.google.com/macros/s/AKfycbwmGxUQA1z6q440Yox69HxRLxtRAr97cOqZ2A4jsN2txZQC7s0o9H2Vc_Q3kl4yV2xr/exec", {
+      method: "POST",
+      body: JSON.stringify(data)
+    })
+    .then(() => {
+      alert("✅ Registration submitted successfully!");
+      form.reset();
+    })
+    .catch(() => {
+      alert("❌ Error! Please try again.");
+    });
+  };
+
+  reader.readAsDataURL(file);
+});
+</script>
 
 </body>
 </html>
