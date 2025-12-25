@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tournament Registration</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+  <div class="card">
+    <h2>🏏 Tournament Registration</h2>
+    <p class="subtitle">Fill details & complete payment to register</p>
+
+    <form>
+      <label>Player Name</label>
+      <input type="text" placeholder="Enter full name" required>
+
+      <label>Role</label>
+      <select required>
+        <option value="">Select Role</option>
+        <option>Batsman</option>
+        <option>Bowler</option>
+        <option>All-Rounder</option>
+        <option>Wicket Keeper</option>
+      </select>
+
+      <label>Mobile Number</label>
+      <input type="tel" placeholder="10-digit mobile number" required>
+
+      <div class="payment-box">
+        <h3>💳 Pay Registration Fee (₹1)</h3>
+       <img src="anand.jpg" alt="UPI QR Code">
+        <p>Scan using Google Pay / PhonePe / Paytm</p>
+      </div>
+
+      <label>UPI Transaction ID</label>
+      <input type="text" placeholder="Enter UPI Ref / Transaction ID" required>
+
+      <label>Upload Payment Screenshot</label>
+      <input type="file" accept="image/*" required>
+
+      <button type="submit">Submit Registration</button>
+    </form>
+
+    <p class="note">
+      ✔ Registration will be confirmed on WhatsApp after payment verification
+    </p>
+  </div>
+</div>
+
+</body>
+</html>
